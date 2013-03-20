@@ -1,0 +1,43 @@
+This file describes CongressRelationVis. It graphs members of the 
+United States House of Representatives based on the similarity of
+their votes during the specified session.
+
+Copyright (C) 2013   Ezra Erb
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+I'd appreciate a note if you find this program useful or make updates. Please contact me through LinkedIn or github (my profile also has a link to the code depository)
+
+The program first reads in all roll call vote data for a given Congressional session and sets them in two bit arrays (voted/not voted and for/against) per Representative. These are combined a pair at a
+time to get the similarity value, which is expressed in tenths of
+percent. Representatives are then clustered by similiarity until the
+overall number of groups drops below a limit; this step is needed to make the graph layout computable in a resonable amount of time. The
+final graph layout is then computed using a classic iterative force layout algorithm. Group color is based on pary with Democrats blue and Republicans red.
+
+To run it, specify the session to graph, or its start year. Data files
+for that session must be available or the program terminates with an error.
+
+This code was written for Windows, but should work with minor edits 
+(file name conventions and the like) on other platforms.
+
+
+Running the program on recent sessions shows intriguing results. The most recent session as of writing is number 112 in 2011/12, the one after the Tea Party movement handed the House to Republicans. The graph shows two big clusters of members, one Republican and one Democratic, rather far apart, with lots of members scattered outside both. The Republican cluster is larger; members buck the leadership more often than Democrats.
+
+Many commentators call this Congress the most polarized in recent history. A graph of 111 from 2009/10 shows where this impression comes from, still two big clusters but much closer together. The parties tried to cooperate in this session, and both were punished for it in the next election. The suprise is 110 from 2007/08, where the two big clusters are nearly as far apart as 112. The difference here is a small number of Democrats and Republicans between the two, who have significant similarity with both. These were members willing to compromise; by 112 they no longer existed.
+
+
+Installation instructions:
+1. Install OpenGL, glu, and glut libraries if not already present
+2. Create a directory.
+3. Copy source files to this directory.
+4. Create the subdirectory 'GovTrackData'
+5. For each wanted session, download needed data to the subdirectory from www.govtrack.us/data/us/[session number]/rolls/. Instructions for doing so are here: http://www.govtrack.us/developers/rsync
+This data is made available under an open source license, which must be agreed to here: http://www.govtrack.us/developers/license
+Thank you to govtrack.us for furthering the cause of open government by compiling this data and making it publicly available.
+6. For each wanted session, download the file www.govtrack.us/data/us/[session number]/people.txt to the subdirectory, and consolidate into one file called people.txt.
+7. Compile and link source files. Link must include OpenGL, glu, glut, and math libraries.
+8. Run the file and specify either the session to graph or its start year. The start year is one year after each Congressional election.
